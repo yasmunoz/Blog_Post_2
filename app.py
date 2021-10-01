@@ -6,11 +6,17 @@ In this example, we are going to look at creating, serving, and deploying a *ver
 - You need to have the flask package installed in your PIC16B Anaconda environment. 
 - You need a Heroku account.
 - You need the Heroku command line interface: 
-    - At the command line:
+    - To install, at the command line (for MacOS)
     brew tap heroku/brew && brew install heroku
 
 - At the command line, run 
     conda activate PIC16B
+
+# Local Preview
+
+At the command line: 
+
+export FLASK_ENV=development; flask run
 
 # Deployment
 
@@ -27,24 +33,19 @@ git commit -m'add files for heroku'
 git push heroku
 ```
 
-Then, website is at 
+Then, the website is at 
 https://pic16b-minimal-demo.herokuapp.com
 
-This URL 
     
 # Sources
 
 This set of lecture notes is based in part on previous materials developed by Erin George (UCLA Mathematics) and the tutorial [here](https://stackabuse.com/deploying-a-flask-application-to-heroku/). 
-
-
 '''
-
 
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
-@app.route("/")
-
+# @app.route("/")
 # simplest possible approach
 # def main():
 #     return "hi there!"
@@ -54,7 +55,24 @@ app = Flask(__name__)
 # def main():
 #     return render_template("main.html")
 
-# fancier template
+# A little fancier
+
 @app.route("/")
 def main():
     return render_template("main_better.html")
+
+# getting basic user data
+@app.route('/ask/', methods=['POST', 'GET'])
+def ask():
+    if request.method == 'GET':
+        return render_template('ask.html')
+    else:
+        try:
+            return render_template('ask.html', name=request.form['name'], student=request.form['student'])
+        except:
+            return render_template('ask.html')
+
+# 
+@app.route('/profile/<name>/')
+def hello_name(name):
+    return render_template('profile.html', name=name)
