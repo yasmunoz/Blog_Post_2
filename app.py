@@ -45,11 +45,23 @@ This set of lecture notes is based in part on previous materials developed by [E
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
-# simplest possible approach
 @app.route("/")
-def main():
-    return render_template("main.html")
+# simplest possible approach
+# def main():
+#     return "hi there!"
 
+
+# slightly less trivial
+# def main():
+#     return render_template("main.html")
+
+# A little fancier
+
+# @app.route("/")
+def main():
+    return render_template("main_better.html")
+
+# getting basic user data
 @app.route('/ask/', methods=['POST', 'GET'])
 def ask():
     if request.method == 'GET':
@@ -59,6 +71,8 @@ def ask():
             return render_template('ask.html', name=request.form['name'], student=request.form['student'])
         except:
             return render_template('ask.html')
+
+# 
 @app.route('/profile/<name>/')
 def hello_name(name):
     return render_template('profile.html', name=name)
