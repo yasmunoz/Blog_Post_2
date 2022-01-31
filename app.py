@@ -49,7 +49,7 @@ app = Flask(__name__)
 def main():
     return render_template('main.html')
 
-@app.route('/ask/', methods=['POST', 'GET'])
+@app.route("/ask/", methods=['POST', 'GET'])
 def ask():
     if request.method == 'GET':
         return render_template('ask.html')
