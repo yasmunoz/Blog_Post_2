@@ -48,4 +48,4 @@ app = Flask(__name__)
 @app.route("/")
 # simplest possible approach
 def main():
-    return render_template("main_better.html")
+    return render_template("main.html")
