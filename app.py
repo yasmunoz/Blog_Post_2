@@ -51,4 +51,10 @@ def main():
 
 @app.route('/ask/', methods=['POST', 'GET'])
 def ask():
-    return render_template('ask.html')
+    if request.method == 'GET':
+        return render_template('ask.html')
+    else:
+        try:
+            return render_template('ask.html', name=request.form['name'], student=request.form['student'])
+        except:
+            return render_template('ask.html')
